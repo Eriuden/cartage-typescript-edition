@@ -52,88 +52,85 @@ export const addPost = (data:any, dispatch:any) => {
 
 }
 
-export const updatePost = (postId, message) => {
-    return (dispatch) => {
+export const updatePost = (postId: string, message: string, dispatch:any) => {
+    
         return axios({
             method:"put",
             url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
             data:{message}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type: UPDATE_POST, payload: {message, postId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))
+    
 }
 
-export const likePost = (postId, userId) => {
-    return (dispatch) => {
+export const likePost = (postId:string, userId:string,dispatch:any) => {
+    
         return axios({
             method: "patch",
             url: `${process.env.REACT_APP_API_URL}api/post/like-post`+ postId,
             data: {id: userId}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type: LIKE_POST, payload: {postId, userId}})
         })
-        .catch((err) => window.alert(err))
+        .catch((err:any) => window.alert(err))
     }
-}
 
-export const unLikePost = (postId, userId) => {
-    return(dispatch) => {
+
+export const unLikePost = (postId:string, userId:string, dispatch:any) => {
+    
         return axios({
             method:"patch",
             url: `${process.env.REACT_APP_API_URL}api/post/unlike-post` + postId,
             data: {id: userId}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type: UNLIKE_POST, payload: {postId, userId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))
 }
 
-export const dislikePost = (postId, userId) => {
-    return (dispatch) => {
+export const dislikePost = (postId:string, userId:string,dispatch:any) => {
+    
         return axios({
             method: "patch",
             url: `${process.env.REACT_APP_API_URL}api/post/dislike-post`+ postId,
             data: {id: userId}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type: DISLIKE_POST, payload: {postId, userId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))   
 }
 
-export const unDisLikePost = (postId, userId) => {
-    return(dispatch) => {
+export const unDisLikePost = (postId: string, userId:string, dispatch:any) => {
+    
         return axios({
             method:"patch",
             url: `${process.env.REACT_APP_API_URL}api/post/undislike-post` + postId,
             data: {id: userId}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type: UNDISLIKE_POST, payload: {postId, userId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))
+    
 }
 
-export const deletePost = (postId,message) => {
-    return(dispatch) => {
+export const deletePost = (postId: string,message: string, dispatch:any) => {
+    
         return axios({
             method: "delete",
             url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
             data:{message},
         })
-        .then((res)=>{
+        .then(()=>{
             dispatch({type: DELETE_POST, payload: {postId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))
 }
 
 export const addComment = (postId, commenterId, text, commenterName) => {
