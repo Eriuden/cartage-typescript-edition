@@ -18,19 +18,21 @@ export const EDIT_COMMENT= "EDIT_COMMENT"
 export const DELETE_COMMENT= " DELETE_COMMENT"
 
 type cardProps = {
-    articleId: string,
+    cardId: string,
     picture: string,
     name: string,
-    typeArticle: string,
-    groupe: string,
-    price: string
+    power: string,
+    effect: string,
+    shield: string,
+    nation: string,
+    price: string,
     likers:[string],
     dislikers:[string],
 }
 
-export const getAllArticles = (num:number, dispatch:any) => {
+export const getAllCards = (num:number, dispatch:any) => {
         return axios 
-            .get(`${process.env.REACT_APP_API_URL}api/article`)
+            .get(`${process.env.REACT_APP_API_URL}api/card`)
             .then((res:any)=> {
                 dispatch ({type: GET_CARD, payload: num})
                 dispatch({type:GET_ALL_CARDS, payload: res.data})
@@ -38,18 +40,18 @@ export const getAllArticles = (num:number, dispatch:any) => {
             .catch((err:any) => window.alert(err))
 }
 
-export const getArticle = (articleId: string, dispatch:any) => {
+export const getCard = (cardId: string, dispatch:any) => {
         return axios
-            .get(`${process.env.REACT_APP_API_URL}api/article/:id`)
+            .get(`${process.env.REACT_APP_API_URL}api/card/:id`)
             .then(()=> {
-                dispatch({type:GET_CARD, payload:articleId})
+                dispatch({type:GET_CARD, payload:cardId})
             })
             .catch((err:any)=> window.alert(err))
 }
 
-export const addArticle = (data: any, dispatch:any) => {
+export const addCard = (data: any, dispatch:any) => {
         return axios 
-            .post(`${process.env.REACT_APP_API_URL}api/article`, data)
+            .post(`${process.env.REACT_APP_API_URL}api/card`, data)
             .then((res:any)=> {
                 if (res.data.errors) {
                     dispatch({type: GET_CARD_ERROR, payload: res.data.errors})
@@ -59,38 +61,40 @@ export const addArticle = (data: any, dispatch:any) => {
             })
 }
 
-export const updateArticle = ({
-    articleId,
+export const updateCard = ({
+    cardId,
     name,
-    typeArticle,
-    groupe,
+    power,
+    effect,
+    shield,
+    nation,
     price
 } : cardProps , dispatch:any
 ) => {
         return axios({
             method:"put",
-            url:`${process.env.REACT_APP_API_URL}api/article/${articleId}`,
-            data: { name, typeArticle, groupe, price},
+            url:`${process.env.REACT_APP_API_URL}api/card/${cardId}`,
+            data: { name, power, effect, shield, nation, price},
         })
         .then(()=> {
             dispatch({
                 type: UPDATE_CARD,
-                payload: {articleId, name, typeArticle, groupe, price}
+                payload: {name, power, effect, shield, nation, price}
             })
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const uploadPicture = (data: any, articleId: string , dispatch:any) => {
+export const uploadPicture = (data: any, cardId: string , dispatch:any) => {
         return axios 
-            .post(`${process.env.REACT_APP_API_URL}api/article/upload-articlePic`, data)
+            .post(`${process.env.REACT_APP_API_URL}api/card/upload-cardPic`, data)
             .then((res:any)=> {
                 if (res.data.errors) {
                     dispatch({type: GET_CARD_ERROR, payload: res.data.errors})
                 } else {
                     dispatch ({ type: GET_CARD_ERROR, payload: ""})
                     return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/article/${articleId}`)
+                    .get(`${process.env.REACT_APP_API_URL}api/card/${cardId}`)
                     .then((res:any)=> {
                         dispatch({ type: UPLOAD_CARD_PICTURE, payload: res.data.picture})
                     })
@@ -99,100 +103,106 @@ export const uploadPicture = (data: any, articleId: string , dispatch:any) => {
             .catch((err:any) => console.log(err))
 }
 
-export const deleteArticle = ({
-    articleId, picture, name, typeArticle, groupe, price
+export const deleteCard = ({
+    cardId,
+    name,
+    power,
+    effect,
+    shield,
+    nation,
+    price
 } : cardProps, dispatch:any) => {
         return axios ({
             method:"delete",
-            url:`${process.env.REACT_APP_API_URL}api/article/${articleId}`,
-            data: {picture, name, typeArticle, groupe, price}
+            url:`${process.env.REACT_APP_API_URL}api/card/${cardId}`,
+            data: {cardId, name, power, effect, shield, nation, price}
         })
         .then(()=> {
-            dispatch({type: DELETE_CARD, payload: {articleId}})
+            dispatch({type: DELETE_CARD, payload: {cardId}})
         })
 }
 
-export const likeArticle = (articleId: string, userId: string, dispatch:any) => {
+export const likeCard = (cardId: string, userId: string, dispatch:any) => {
         return axios({
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/like-article`+ articleId,
+            url: `${process.env.REACT_APP_API_URL}api/card/like-card`+ cardId,
             data: {id:userId}
         })
         .then(()=> {
-            dispatch({type: LIKE_CARD, payload: {articleId, userId}})
+            dispatch({type: LIKE_CARD, payload: {cardId, userId}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const unlikeArticle = (articleId: string, userId: string, dispatch:any) => {
+export const unlikeCard = (cardId: string, userId: string, dispatch:any) => {
         return axios({
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/unlike-article`+ articleId,
+            url: `${process.env.REACT_APP_API_URL}api/card/unlike-card`+ cardId,
             data: {id:userId}
         })
         .then(()=> {
-            dispatch({type: UNLIKE_CARD, payload: {articleId, userId}})
+            dispatch({type: UNLIKE_CARD, payload: {cardId, userId}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const dislikeArticle = (articleId: string, userId: string, dispatch:any) => {
+export const dislikeCard = (cardId: string, userId: string, dispatch:any) => {
         return axios({
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/dislike-article`+ articleId,
+            url: `${process.env.REACT_APP_API_URL}api/card/dislike-card`+ cardId,
             data: {id:userId}
         })
         .then(()=> {
-            dispatch({type: DISLIKE_CARD, payload: {articleId, userId}})
+            dispatch({type: DISLIKE_CARD, payload: {cardId, userId}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const undislikeArticle = (articleId: string, userId: string, dispatch:any) => {
+export const undislikeCard = (cardId: string, userId: string, dispatch:any) => {
         return axios({
             method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/undislike-article`+ articleId,
+            url: `${process.env.REACT_APP_API_URL}api/card/undislike-card`+ cardId,
             data: {id:userId}
         })
         .then(()=> {
-            dispatch({type: UNDISLIKE_CARD, payload: {articleId, userId}})
+            dispatch({type: UNDISLIKE_CARD, payload: {cardId, userId}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const addCommentArticle = (articleId: string, commentId: string, commenterId: string, text: string, commenterName: string
+export const addCommentCard = (cardId: string, commentId: string, commenterId: string, text: string, commenterName: string
     ,dispatch:any) => {
         return axios({
             method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/comment-article/${articleId}`,
+            url: `${process.env.REACT_APP_API_URL}api/card/comment-card/${cardId}`,
             data: {commentId, commenterId, text, commenterName}
         })
         .then(()=> {
-            dispatch({ type: ADD_COMMENT, payload: {articleId}})
+            dispatch({ type: ADD_COMMENT, payload: {cardId}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const editCommentArticle = (articleId: string, commentId: string, text: string, dispatch:any) => {
+export const editCommentCard = (cardId: string, commentId: string, text: string, dispatch:any) => {
         return axios({
             method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/edit-comment-article/${articleId}`,
+            url: `${process.env.REACT_APP_API_URL}api/card/edit-comment-card/${cardId}`,
             data: { commentId, text}
         })
         .then(()=> {
-            dispatch({ type: EDIT_COMMENT, payload: {articleId, commentId, text}})
+            dispatch({ type: EDIT_COMMENT, payload: {cardId, commentId, text}})
         })
         .catch((err:any)=> window.alert(err))
 }
 
-export const deleteCommentArticle = (articleId:string, commentId:string, dispatch:any) => {
+export const deleteCommentCard = (cardId:string, commentId:string, dispatch:any) => {
         return axios({
             method:"patch",
-            url: `${process.env.REACT_APP_API_URL}api/article/delete-comment-article/${articleId}`,
+            url: `${process.env.REACT_APP_API_URL}api/card/delete-comment-card/${cardId}`,
             data:{commentId},
         })
         .then(()=> {
-            dispatch({ type: DELETE_COMMENT, payload: {articleId, commentId}})
+            dispatch({ type: DELETE_COMMENT, payload: {cardId, commentId}})
         })
         .catch((err:any)=> window.alert(err))
 }
