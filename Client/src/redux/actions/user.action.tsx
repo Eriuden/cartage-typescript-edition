@@ -18,10 +18,10 @@ type userProps ={
 export const getUser = (uid: string, dispatch:any) => {
         return axios 
             .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
-            .then((res) => {
+            .then((res:any) => {
                 dispatch({type: GET_USER, payload: res.data})
             })
-            .catch((err) => window.alert(err))
+            .catch((err:any) => window.alert(err))
 }
 
 export const updateUser = ({userId, name, adress, email} : userProps, dispatch: any) => {   
@@ -38,19 +38,19 @@ export const updateUser = ({userId, name, adress, email} : userProps, dispatch: 
 export const uploadPicture = (data: any, id: string, dispatch:any) => {
         return axios 
             .post(`${process.env.REACT_APP_API_URL}api/user/upload-userPic`, data)
-            .then((res)=> {
+            .then((res:any)=> {
                 if (res.data.errors) {
                     dispatch({type: GET_USER_ERRORS, payload: res.data.errors})
                 } else {
                     dispatch ({ type: GET_USER_ERRORS, payload: ""})
                     return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
-                    .then((res)=> {
+                    .then((res:any)=> {
                         dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture})
                     })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err:any) => console.log(err))
 }
 
 export const updatePassword = (userId: string, password: string, dispatch:any) => {
@@ -62,7 +62,7 @@ export const updatePassword = (userId: string, password: string, dispatch:any) =
         .then(()=> {
             dispatch({type: UPDATE_PASSWORD, payload: password})
         })
-        .catch((err)=> window.alert(err))
+        .catch((err:any)=> window.alert(err))
 }
 
 export const deleteUser = ({userId, name, email, adress, password} : userProps, dispatch:any) => {
