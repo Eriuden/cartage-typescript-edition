@@ -18,38 +18,30 @@ export const GET_TRENDS = "GET_TRENDS"
 
 export const GET_POST_ERRORS = "GET_POST_ERRORS"
 
-type commentProps = {
-    commentId: string,
-    postId: string,
-    commenterId: string,
-    text:string
-}
 
 export const getPosts = (num:any, dispatch:any) => {  
         return axios 
         .get(`${process.env.REACT_APP_API_URL}api/post/`)
-        .then((res) => {
+        .then((res:any) => {
             const array = res.data.slice(0,num)
             dispatch({ type: GET_POST, payload: array})
             dispatch({ type: GET_ALL_POSTS, payload: res.data})
         })
-        .catch((err) => {
+        .catch((err:any) => {
             window.alert(err)
         })
 }
 
-export const addPost = (data:any, dispatch:any) => {
-    
+export const addPost = (data:any, dispatch:any) => {  
         return axios
         .post(`${process.env.REACT_APP_API_URL}api/post`, data)
-        .then((res) => {
+        .then((res:any) => {
             if (res.data.errors) {
                 dispatch ({ type: GET_POST_ERRORS, payload: res.data.errors})
             } else {
                 dispatch({ type: GET_POST_ERRORS, payload: ""})
             }
         })
-
 }
 
 export const updatePost = (postId: string, message: string, dispatch:any) => {
@@ -63,7 +55,6 @@ export const updatePost = (postId: string, message: string, dispatch:any) => {
             dispatch({type: UPDATE_POST, payload: {message, postId}})
         })
         .catch((err:any) => window.alert(err))
-    
 }
 
 export const likePost = (postId:string, userId:string,dispatch:any) => {
@@ -78,7 +69,6 @@ export const likePost = (postId:string, userId:string,dispatch:any) => {
         })
         .catch((err:any) => window.alert(err))
     }
-
 
 export const unLikePost = (postId:string, userId:string, dispatch:any) => {
     
@@ -116,12 +106,10 @@ export const unDisLikePost = (postId: string, userId:string, dispatch:any) => {
         .then(() => {
             dispatch({type: UNDISLIKE_POST, payload: {postId, userId}})
         })
-        .catch((err:any) => window.alert(err))
-    
+        .catch((err:any) => window.alert(err))  
 }
 
-export const deletePost = (postId: string,message: string, dispatch:any) => {
-    
+export const deletePost = (postId: string,message: string, dispatch:any) => {    
         return axios({
             method: "delete",
             url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
@@ -133,36 +121,37 @@ export const deletePost = (postId: string,message: string, dispatch:any) => {
         .catch((err:any) => window.alert(err))
 }
 
-export const addComment = (postId, commenterId, text, commenterName) => {
-    return (dispatch) => {
+export const addComment = (postId:string,
+    commenterId:string,
+    text:string, 
+    commenterName:string,
+    dispatch:any) => {   
+        
         return axios({
             method: "patch",
             url: `${process.env.REACT_APP_API_URL}api/post/comment-post/${postId}`,
             data: {commenterId, text, commenterName}
         })
-        .then((res) => {
+        .then(() => {
             dispatch({type : ADD_COMMENT, payload: { postId}})
         })
-        .catch((err) => window.alert(err))
-    }
+        .catch((err:any) => window.alert(err))
 }
 
-export const editComment = ({
-     postId,
-     commentId,
-     text
-    } : commentProps,
+export const editComment = (
+     postId:string,
+     commentId:string,
+     text:string,
      dispatch:any) => {
     
-        return axios(
-            .get(`{process.env.REACT_APP_API_URL}api/post/edit-comment-post/${postId}`)
+        return axios({
+            url:(`{process.env.REACT_APP_API_URL}api/post/edit-comment-post/${postId}`),
             data:{commentId, text},
-        )
+        })
         .then(() => {
             dispatch({type: EDIT_COMMENT, payload: {postId, commentId, text}})
         })
-        .catch((err:any) => window.alert(err))
-    
+        .catch((err:any) => window.alert(err))   
 }
 
 export const deleteComment = (postId:string, commentId:string, dispatch:any) => {    
