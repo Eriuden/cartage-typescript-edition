@@ -3,7 +3,7 @@ import axios from "axios";
 export const GET_USER = "GET_USER"
 export const UPDATE_USER = "UPDATE_USER"
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
-export const GET_USER_ERRORS = "GET_USER_ERRORS"
+export const GET_USER_ERROR = "GET_USER_ERROR"
 export const UPDATE_PASSWORD = "UPDATE_PASSWORD"
 export const DELETE_USER = "DELETE_USER"
 
@@ -40,9 +40,9 @@ export const uploadPicture = (data: any, id: string, dispatch:any) => {
             .post(`${process.env.REACT_APP_API_URL}api/user/upload-userPic`, data)
             .then((res:any)=> {
                 if (res.data.errors) {
-                    dispatch({type: GET_USER_ERRORS, payload: res.data.errors})
+                    dispatch({type: GET_USER_ERROR, payload: res.data.errors})
                 } else {
-                    dispatch ({ type: GET_USER_ERRORS, payload: ""})
+                    dispatch ({ type: GET_USER_ERROR, payload: ""})
                     return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
                     .then((res:any)=> {
