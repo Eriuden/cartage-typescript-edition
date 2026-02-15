@@ -28,7 +28,7 @@ export const Connexion = () => {
           window.location.href = "/"
         }
       })
-      .catch((err)=> {
+      .catch((err:any)=> {
         console.log(err)
       })
   }
