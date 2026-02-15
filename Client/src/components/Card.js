@@ -1,0 +1,14 @@
+import React from 'react'
+
+export default function Card(card) {
+  return (
+    <div>
+        <img src={card.picture} alt= "image de carte" />
+        <h2>{card.name}</h2>
+        <h3>{card.power}</h3>
+        <h3>{card.shield}</h3>
+        <h3>{card.effect}</h3>
+        <h3>{card.nation}</h3>
+    </div>
+  )
+}
