@@ -8,11 +8,6 @@ export const UPDATE_CARD = "UPDATE_CARD"
 export const UPLOAD_CARD_PICTURE = "UPLOAD_CARD_PICTURE"
 export const DELETE_CARD = "DELETE_CARD"
 
-export const LIKE_CARD = "LIKE_CARD"
-export const UNLIKE_CARD = "UNLIKE_CARD"
-export const DISLIKE_CARD = "DISLIKE_CARD"
-export const UNDISLIKE_CARD = "UNDISLIKE_CARD"
-
 export const ADD_COMMENT= "ADD_COMMENT"
 export const EDIT_COMMENT= "EDIT_COMMENT"
 export const DELETE_COMMENT= " DELETE_COMMENT"
@@ -111,7 +106,7 @@ export const deleteCard = ({
     shield,
     nation,
     price
-} : cardProps, dispatch:any) => {
+    } : cardProps, dispatch:any) => {
         return axios ({
             method:"delete",
             url:`${process.env.REACT_APP_API_URL}api/card/${cardId}`,
@@ -120,54 +115,6 @@ export const deleteCard = ({
         .then(()=> {
             dispatch({type: DELETE_CARD, payload: {cardId}})
         })
-}
-
-export const likeCard = (cardId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/card/like-card`+ cardId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: LIKE_CARD, payload: {cardId, userId}})
-        })
-        .catch((err:any)=> window.alert(err))
-}
-
-export const unlikeCard = (cardId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/card/unlike-card`+ cardId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: UNLIKE_CARD, payload: {cardId, userId}})
-        })
-        .catch((err:any)=> window.alert(err))
-}
-
-export const dislikeCard = (cardId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/card/dislike-card`+ cardId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: DISLIKE_CARD, payload: {cardId, userId}})
-        })
-        .catch((err:any)=> window.alert(err))
-}
-
-export const undislikeCard = (cardId: string, userId: string, dispatch:any) => {
-        return axios({
-            method: "patch",
-            url: `${process.env.REACT_APP_API_URL}api/card/undislike-card`+ cardId,
-            data: {id:userId}
-        })
-        .then(()=> {
-            dispatch({type: UNDISLIKE_CARD, payload: {cardId, userId}})
-        })
-        .catch((err:any)=> window.alert(err))
 }
 
 export const addCommentCard = (cardId: string, commentId: string, commenterId: string, text: string, commenterName: string
