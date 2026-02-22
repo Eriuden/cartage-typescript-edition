@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getAllCards } from "../redux/actions/card.action"
 import Card from "./Card"
-import { isEmpty } from "../Utils"
+import { isEmpty } from "../utils"
 
 export const Searcher = () => {
 
