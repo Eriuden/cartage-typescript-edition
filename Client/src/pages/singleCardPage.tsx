@@ -2,7 +2,7 @@ import { getCard } from '../redux/actions/card.action'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
-export default function singleCardPage() {
+export const SingleCardPage = () => {
 
   type appDispatch = () => any
   const card = useSelector((state: any) => state.cardReducer)
