@@ -20,7 +20,7 @@ export const Connexion = () => {
         password
       },
     })
-      .then((res)=> {
+      .then((res:any)=> {
         if (res.data.errors) {
           emailError.innerHTML = res.data.errors.email 
           passwordError.innerHTML = res.data.errors.password 
